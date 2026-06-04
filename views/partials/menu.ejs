@@ -1,0 +1,20 @@
+<div class="list-group">
+  <% if (categories.length > 0) { %>
+    <% categories.forEach(category => { %>
+      <% if (originalUrl.startsWith("/admin")) { %>
+        <a href="/admin/products/<%= category._id %>" class="<%= category._id == selectedCategory ? "list-group-item list-group-item-action active" : "list-group-item list-group-item-action" %>"
+          ><%= category.name %></a
+          >
+        <% } else { %>
+         <a href="/categories/<%= category._id %>" class="<%= category._id == selectedCategory ? "list-group-item list-group-item-action active" : "list-group-item list-group-item-action" %>"
+          ><%= category.name %></a
+          >
+      <% } %>
+      
+    <% }) %>
+    <% } else { %>
+      <a href="#" class="list-group-item list-group-item-action disabled"
+        >No Category</a
+      >
+  <% } %>
+</div>

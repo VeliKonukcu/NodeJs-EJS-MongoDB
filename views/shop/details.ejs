@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <img
+        src="/images/<%= product.imageUrl %>"
+        class="img-fluid"
+        alt="<%= product.description %>"
+      />
+    </div>
+    <div class="col-md-8 p-4">
+      <h5 class="card-title"><%= product.name %></h5>
+      <hr />
+      <p class="card-text"><%= product.description %></p>
+      <hr />
+      <p><% product.categoryIds.forEach(category => { %>
+        <%= category.name %>
+        <br>
+      <% }) %></p>
+      <hr />
+      <p class="card-text"><%= product.price %></p>
+      <hr />
+      <form action="/cart/<%= product._id %>" method="post">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
+      </form>
+    </div>
+  </div>
+</div>

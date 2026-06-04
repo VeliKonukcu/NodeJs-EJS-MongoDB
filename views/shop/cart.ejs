@@ -1,0 +1,74 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <% if (products.length > 0) { %>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Amount</th>
+                <th>Total Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% let totalAmount = 0; %>
+              <% products.forEach(product => { %>
+                <tr>
+                  <td>
+                    <img src="/images/<%= product.productId.imageUrl %>" width="80" alt="<%= product.productId.description %>" />
+                  </td>
+                  <td>
+                    <h5><%= product.productId.name %></h5>
+                  </td>
+                  <td>
+                    <p>
+                      <%= product.productId.price %> TL
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                        <%= product.quantity %>
+                    </p>
+                  </td>
+                  <td>
+                    <p>
+                        <% totalAmount += product.productId.price * product.quantity; %>
+                        <%= product.productId.price * product.quantity %> TL
+                    </p>
+                  </td>
+                  <td>
+                    <form action="/delete-cartItem" method="post">
+                      <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                      <input type="hidden" name="productId" value="<%= product.productId._id %>">
+                      <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }) %> 
+            </tbody>
+            <tfoot>
+              <td colspan="4">
+                <div class="text-center">
+                  <a href="/" class="btn btn-success btn-sm">Alışverişe devam et</a>
+                  <form action="/create-order" method="post">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+                    <button type="submit" class="btn btn-success btn-sm">Alışverişi tamamla</button>
+                  </form>
+                </div>
+              </td>
+              <td><h4 class="text-decoration-underline"><%= totalAmount %> TL</h4></td>
+            </tfoot>
+          </table>
+          
+          <% } else { %>
+            <h1>No Product</h1>
+        <% } %>
+         
+      </div>
+    </div>
+  </div>
+</div>

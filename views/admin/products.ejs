@@ -1,0 +1,68 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-lg-3">
+      <%- include('../partials/menu') %>
+    </div>
+    <div class="col-lg-9">
+      <% if (action !== "undefined" && action === "edit") { %>
+        <div class="alert alert-success"> Product updated</div>
+      <% } %>
+
+      <% if (action !== "undefined" && action === "delete") { %>
+        <div class="alert alert-danger"> Product deleted</div>
+      <% } %>
+      
+      <% if (errorMessage) { %>
+        <div class="alert alert-warning"> <%= errorMessage %></div>
+      <% } %>
+      <div class="row">
+        <% if (products.length > 0) { %>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>User</th>
+                <th>Category</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% products.forEach(product => { %>
+                <tr>
+                  <td>
+                    <img src="/images/<%= product.imageUrl %>" width="80" alt="<%= product.description %>" />
+                  </td>
+                  <td>
+                    <h5><%= product.name %></h5>
+                  </td>
+                  <td>
+                    <p>
+                      <%= product.price %> TL
+                    </p>
+                  </td>
+                  <td>
+                    <%= product.userId.name %>
+                  </td>
+                  <td>
+                    <% product.categoryIds.forEach(categoryId => { %>
+                     <%= categoryId.name %>
+                     <br>
+                    <% }) %>
+                  </td>
+                  <td>
+                    <a href="/admin/edit-product/<%= product._id %>" class="btn btn-primary">Edit</a>
+                  </td>
+                </tr>
+              <% }) %> 
+            </tbody>
+          </table>
+          <% } else { %>
+            <h1>No Product</h1>
+        <% } %>
+         
+      </div>
+    </div>
+  </div>
+</div>

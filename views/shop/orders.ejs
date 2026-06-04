@@ -1,0 +1,51 @@
+<% if (orders.length > 0) { %>
+    <% orders.forEach(order => { %>
+        <div class="card my-4 container">
+            <div class="card-header">
+                <h3>Order Id: <%= order._id %></h3>
+            </div>
+            <table class="table mb-0">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <% 
+                let totalAmount = 0;
+                %>
+                <tbody>
+                    <% order.items.forEach(product => { %>
+                        <tr>
+                            <td>
+                                <img src="/images/<%= product.imageUrl %>" width="80" alt="<%= product.name %>">
+                            </td>
+                            <td>
+                                <%= product.name %>
+                            </td>
+                            <td>
+                                <%= product.price %>
+                            </td>
+                            <td>
+                                <%= product.quantity %>
+                            </td>
+                            <%
+                            totalAmount += product.price * product.quantity;
+                            %>
+                        </tr>
+                    <% }) %>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2">Sipariş Tarihi:  <%= order.createdAt %></td>
+                            <td><%= totalAmount %> TL </td>
+                        </tr>
+                    </tfoot>
+            </table>
+        </div>
+    <% }) %>
+    <% } else { %>
+        <h1>No Orders</h1>
+<% } %>

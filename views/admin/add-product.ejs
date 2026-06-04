@@ -1,0 +1,61 @@
+<div class="container">
+  <form action="/admin/add-products" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <% if (errorMessage) { %>
+      <div class="alert alert-warning"> <%- errorMessage %></div>
+    <% } %>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="<%= oldValues?.name %>"
+        aria-describedby="emailHelp"
+      />
+      <div id="emailHelp" class="form-text">ProductName here</div>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Price</label>
+      <input type="number" class="form-control" id="price" value="<%= oldValues?.price %>" name="price" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Image</label><br>
+      <input type="file" class="form-control-file" id="image" name="image" />
+    </div>
+    <div class="mb-3">
+      <label for="list-group" class="form-label">Categories</label>
+      <ul class="list-group">
+        <% categories.forEach(category => { %>
+          <li class="list-group-item">
+          <input
+          class="form-check-input me-1"
+          type="checkbox"
+          value="<%= category._id %>"
+          id="<%= category._id %>"
+          name="categoryIds"
+          <%= oldValues?.categoryIds?.includes(category._id.toString()) ? "checked" : "" %>
+          />
+          <label
+          class="form-check-label stretched-link"
+          for="<%= category._id %>"
+          ><%= category.name %></label
+            >
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        value="<%= oldValues?.description %>"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>

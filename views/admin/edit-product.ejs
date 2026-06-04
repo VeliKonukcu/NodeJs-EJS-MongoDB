@@ -1,0 +1,85 @@
+<div class="container">
+  <form action="/admin/edit-product" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Product Id</label>
+      <input
+        type="text"
+        class="form-control"
+        id="id"
+        name="id"
+        value="<%= product._id %>"
+        readonly
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Product Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        value="<%= product.name %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="price"
+        name="price"
+        value="<%= product.price %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Image</label><br>
+      <!-- Resim seçildiğinde güncellenmesi gerekir -->
+      <img src="/images/<%= product.imageUrl %>" width="100" alt="">
+      <input
+        type="file"
+        class="form-control-file"
+        id="image"
+        name="image"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="list-group" class="form-label">Categories</label>
+      <ul class="list-group">
+        <% categories.forEach(category => { %>
+          <li class="list-group-item">
+            <input
+            class="form-check-input me-1"
+            type="checkbox"
+            value="<%= category._id %>"
+            id="<%= category._id %>"
+            name="categoryIds"
+            <%= category.checked ? "checked" : ""%>
+            />
+            <label
+            class="form-check-label stretched-link"
+            for="<%= category._id %>"
+            ><%= category.name %></label
+            >
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Description</label>
+      <input
+        type="text"
+        class="form-control"
+        id="description"
+        name="description"
+        value="<%= product.description %>"
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Güncelle</button>
+  </form>
+  <form action="/admin/delete-product/<%= product._id %>" method="post">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+    <button type="submit" class="btn btn-danger">Sil</button>
+  </form>
+</div>
